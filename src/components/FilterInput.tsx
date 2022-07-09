@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import classes from "./FilterInput.module.css";
 type Props = {
   setFilter: Dispatch<SetStateAction<string>>;
-  refetchData: () => {};
+  refetchData: () => void;
 };
 
 const FilterInput = ({ setFilter, refetchData }: Props) => {

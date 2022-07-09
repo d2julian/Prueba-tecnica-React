@@ -9,6 +9,11 @@ function App() {
   const { data, error, isFetching, refetch } = useActivities(numberOfActivities);
   const [filter, setFilter] = useState("");
 
+  const refetchHandler = () => {
+    refetch();
+    setFilter("");
+  };
+
   const filteredData = useMemo(
     () => data?.filter((a) => a.activity.toLowerCase().includes(filter.toLowerCase()) || a.type.toLowerCase().includes(filter.toLowerCase())),
     [data, filter]
@@ -28,7 +33,7 @@ function App() {
     );
   return (
     <div>
-      <FilterInput setFilter={setFilter} refetchData={refetch} />
+      <FilterInput setFilter={setFilter} refetchData={refetchHandler} />
       <ActivityList data={filteredData} />
     </div>
   );
