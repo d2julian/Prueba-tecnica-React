@@ -7,16 +7,21 @@ const getActivities = async (numberOfActivities: number) => {
   const activities: ActivityList = [];
   let response;
   let data: any;
-  while (activities.length < numberOfActivities) {
-    response = await fetch(url);
-    data = await response.json();
-    // Evitar añadir activades duplicadas
-    if (!activities.some(({ activity }) => activity === data.activity)) {
-      activities.push(data);
+  const saveActivities: ActivityList = JSON.parse(localStorage.getItem("Activities") as string);
+  if (!saveActivities) {
+    while (activities.length < numberOfActivities) {
+      response = await fetch(url);
+      data = await response.json();
+      // Evitar añadir actividades duplicadas
+      if (!activities.some(({ key }) => key === data.key)) {
+        activities.push(data);
+      }
     }
+    localStorage.setItem("Activities", JSON.stringify(activities));
+    return activities;
+  } else {
+    return saveActivities;
   }
-
-  return activities;
 };
 
 export default function useActivities(numberOfActivities: number) {

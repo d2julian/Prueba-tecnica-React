@@ -10,6 +10,7 @@ function App() {
   const [filter, setFilter] = useState("");
 
   const refetchHandler = () => {
+    localStorage.setItem("Activities", JSON.stringify(null));
     refetch();
     setFilter("");
   };
