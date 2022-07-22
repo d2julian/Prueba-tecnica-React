@@ -1,24 +1,25 @@
 import "./App.css";
 import ActivityList from "./components/ActivityList";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import useActivities from "./hooks/useActivities";
 import FilterInput from "./components/FilterInput";
+import { ActivityListType } from "./types/types";
+import { UseQueryResult } from "react-query";
 
 function App() {
   const [numberOfActivities, setNumberOfActivities] = useState(10);
-  const { data, error, isFetching, refetch } = useActivities(numberOfActivities);
+  const { data, error, isFetching, refetch }: UseQueryResult<ActivityListType, Error> = useActivities(numberOfActivities);
   const [filter, setFilter] = useState("");
-
+  console.log(data);
   const refetchHandler = () => {
     localStorage.setItem("Activities", JSON.stringify(null));
     refetch();
     setFilter("");
   };
 
-  const filteredData = useMemo(
-    () => data?.filter((a) => a.activity.toLowerCase().includes(filter.toLowerCase()) || a.type.toLowerCase().includes(filter.toLowerCase())),
-    [data, filter]
-  );
+  const filteredData = data
+    ? data?.filter((a) => a.activity.toLowerCase().includes(filter.toLowerCase()) || a.type.toLowerCase().includes(filter.toLowerCase()))
+    : [];
 
   if (isFetching)
     return (

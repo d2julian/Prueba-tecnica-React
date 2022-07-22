@@ -1,13 +1,13 @@
 import { useQuery } from "react-query";
-import { ActivityList } from "../types/types";
+import { ActivityListType } from "../types/types";
 
 const url = "http://www.boredapi.com/api/activity/";
 
 const getActivities = async (numberOfActivities: number) => {
-  const activities: ActivityList = [];
+  const activities: ActivityListType = [];
   let response;
   let data: any;
-  const saveActivities: ActivityList = JSON.parse(localStorage.getItem("Activities") as string);
+  const saveActivities: ActivityListType = JSON.parse(localStorage.getItem("Activities") as string);
   if (!saveActivities) {
     while (activities.length < numberOfActivities) {
       response = await fetch(url);
@@ -25,5 +25,5 @@ const getActivities = async (numberOfActivities: number) => {
 };
 
 export default function useActivities(numberOfActivities: number) {
-  return useQuery<ActivityList, Error>(["activities", numberOfActivities], () => getActivities(numberOfActivities));
+  return useQuery<ActivityListType, Error>(["activities", numberOfActivities], () => getActivities(numberOfActivities));
 }

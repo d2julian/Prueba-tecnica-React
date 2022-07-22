@@ -11,8 +11,8 @@ export type ActivityType = {
 export interface ActivityTypeProps {
   data: ActivityType;
 }
-export type ActivityList = ActivityType[];
+export type ActivityListType = ActivityType[];
 
 export interface ActivityListProps {
-  data: ActivityList;
+  data: ActivityListType;
 }
